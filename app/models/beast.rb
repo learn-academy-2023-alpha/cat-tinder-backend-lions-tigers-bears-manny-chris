@@ -1,0 +1,2 @@
+class Beast < ApplicationRecord
+end
