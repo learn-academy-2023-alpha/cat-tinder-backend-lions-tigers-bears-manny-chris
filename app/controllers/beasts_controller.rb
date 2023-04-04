@@ -8,16 +8,21 @@ class BeastsController < ApplicationController
       def create
             # Create a new entry
             beast = Beast.create(beast_params)
-            render json: beast
+            if beast.valid?
+                  render json: beast
+            else 
+                  render json: beast.errors, status: 422
+            end
       end
 
       def update
             # Update an existing entry
             beast = Beast.find(params[:id])
-            if beast.update(beast_params) 
+            beast.update(beast_params)
+            if beast.valid? 
                   render json: beast
             else
-                  render json: beast.errors
+                  render json: beast.errors, status: 422
             end
       end
 
