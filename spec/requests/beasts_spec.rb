@@ -1,50 +1,52 @@
 require 'rails_helper'
 
 RSpec.describe "Beasts", type: :request do
-  describe "GET /index" do
-      it 'gets a list of beasts' do
-      # Create a test entry
-            Beast.create(
-                  name: 'Tony',
-                  age: 30,
-                  description: 'Grrrrrreaaaaat match',
-                  image: 'https://live.staticflickr.com/105/254081788_9c4335692d_b.jpg'
-            )
+      describe "GET /index" do
+            it 'gets a list of beasts' do
+                  # Create a test entry
+                        Beast.create(
+                              name: 'Tony',
+                              age: 30,
+                              description: 'Grrrrrreaaaaat match',
+                              image: 'https://live.staticflickr.com/105/254081788_9c4335692d_b.jpg'
+                        )
 
-            # Make a request
-            get '/beasts'
+                        # Make a request
+                        get '/beasts'
 
-            beast = JSON.parse(response.body)
-            expect(response).to have_http_status(200)
-            expect(beast.length).to eq 1
+                        beast = JSON.parse(response.body)
+                        expect(response).to have_http_status(200)
+                        expect(beast.length).to eq 1
+            end
       end
 
-    describe 'POST/create' do
-      it 'creates a beast' do
-            # Create a test entry
-            beast_params = {
-                  beast: {
-                        name: 'Tony',
-                        age: 30,
-                        description: 'Grrrrrreaaaaat match',
-                        image: 'https://live.staticflickr.com/105/254081788_9c4335692d_b.jpg'
+      describe 'POST/create' do
+            it 'creates a beast' do
+                  # Create a test entry
+                  beast_params = {
+                        beast: {
+                              name: 'Tony',
+                              age: 30,
+                              description: 'Grrrrrreaaaaat match',
+                              image: 'https://live.staticflickr.com/105/254081788_9c4335692d_b.jpg'
+                        }
                   }
-            }
 
-            # Send the request to the server
-            post '/beasts', params: beast_params
+                  # Send the request to the server
+                  post '/beasts', params: beast_params
 
-            # Assure the request is successful
-            expect(response).to have_http_status(200)
+                  # Assure the request is successful
+                  expect(response).to have_http_status(200)
 
-            # Pull first entry from the model
-            beast = Beast.first
+                  # Pull first entry from the model
+                  beast = Beast.first
 
-            # Assure the created beast has correct attributes
-            expect(beast.name).to eq 'Tony'
-            expect(beast.age).to eq 30
-            expect(beast.description).to eq 'Grrrrrreaaaaat match'
-            expect(beast.image).to eq 'https://live.staticflickr.com/105/254081788_9c4335692d_b.jpg'
+                  # Assure the created beast has correct attributes
+                  expect(beast.name).to eq 'Tony'
+                  expect(beast.age).to eq 30
+                  expect(beast.description).to eq 'Grrrrrreaaaaat match'
+                  expect(beast.image).to eq 'https://live.staticflickr.com/105/254081788_9c4335692d_b.jpg'
+            end
       end
 
       describe 'PATCH/update' do
@@ -123,6 +125,4 @@ RSpec.describe "Beasts", type: :request do
                   expect(beasts).to be_empty
             end
       end
-    end
-  end
 end

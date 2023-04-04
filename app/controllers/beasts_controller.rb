@@ -13,7 +13,6 @@ class BeastsController < ApplicationController
             else 
                   render json: beast.errors, status: 422
             end
-
       end
 
       def update
